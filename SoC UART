@@ -1,0 +1,28 @@
+#include <device.h>
+ 
+void sys_init();
+ 
+void main() {
+    uint32 rxData;
+    char test_string[] = "Hello World\n\r";
+ 
+    sys_init();
+ 
+    PC_PSoC_UART_UartPutString(test_string); // print test_string
+ 
+    for(;;) // endless loop
+    {
+        rxData = PC_PSoC_UART_UartGetChar(); // store received characters in temporary variable
+ 
+        if(rxData) { // make sure data is non-zero
+            PC_PSoC_UART_UartPutChar(rxData); // echo characters in terminal window
+ 
+            // Handle received characters
+        }
+    }
+}
+void sys_init (void) {
+    PC_PSoC_UART_Start();
+ 
+    // Add additional initialization code as desired
+}
